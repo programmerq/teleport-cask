@@ -13,7 +13,9 @@ cask "teleport-ent" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: "teleport", cask: "tsh"
+  conflicts_with formula: "teleport"
+  conflicts_with cask: "teleport"
+  conflicts_with cask: "tsh"
 
   caveats do
     license "https://dashboard.gravitational.com/web/"

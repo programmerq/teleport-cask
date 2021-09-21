@@ -13,7 +13,9 @@ cask "tsh" do
     "com.gravitational.teleport.tsh"
   ]
 
-  conflicts_with formula: "teleport", cask: "teleport-ent", cask: "teleport"
+  conflicts_with formula: "teleport"
+  conflicts_with cask: "teleport-ent"
+  conflicts_with cask: "teleport"
 
   caveats do
     license "Apache-2.0"
