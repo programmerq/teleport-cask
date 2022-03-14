@@ -1,6 +1,6 @@
 cask "teleport" do
-  version "9.0.0"
-  sha256 "f8f39ba65a78990a96f077ae962cdf7a1cadd7d5c42a293ccc0c254714767cec"
+  version "8.3.4"
+  sha256 "7614c9b6004d3e4ae1ace359a63f6ff39534daa10063e56a270e5f36f85b8280"
 
   url "https://get.gravitational.com/teleport-#{version}.pkg",
       verified: "get.gravitational.com"
@@ -13,7 +13,7 @@ cask "teleport" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport-ent", "tsh", "teleport-ent@7.0", "teleport-ent@7.1", "teleport-ent@7.2", "teleport-ent@7.3", "teleport-ent@8.0"]
+  conflicts_with formula: "teleport", cask: ["teleport-ent", "tsh", "teleport-ent@7.0", "teleport-ent@7.1", "teleport-ent@7.2", "teleport-ent@7.3"]
 
   caveats do
     license "Apache-2.0"

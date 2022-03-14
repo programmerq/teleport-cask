@@ -1,6 +1,6 @@
 cask "teleport-ent" do
-  version "7.3.17"
-  sha256 "cb050003e34768255111c215e2e0c29f42c5d4608e5f7e29842a9bd34bc502ab"
+  version "8.3.4"
+  sha256 "ca21a6d06ea92ef381af959361d9239ab60aa8f820296897d07bce374b220556"
 
   url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
       verified: "get.gravitational.com"
@@ -13,7 +13,7 @@ cask "teleport-ent" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport", "tsh", "teleport-ent@7.0", "teleport-ent@7.1", "teleport-ent@7.2"]
+  conflicts_with formula: "teleport", cask: ["teleport", "tsh", "teleport-ent@7.0", "teleport-ent@7.1", "teleport-ent@7.2", "teleport-ent@7.3"]
 
   caveats do
     license "https://dashboard.gravitational.com/web/"
