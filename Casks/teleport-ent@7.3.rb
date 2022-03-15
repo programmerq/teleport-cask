@@ -1,4 +1,4 @@
-cask "teleport-ent" do
+cask "teleport-ent@7.3" do
   version "7.3.17"
   sha256 "cb050003e34768255111c215e2e0c29f42c5d4608e5f7e29842a9bd34bc502ab"
 
