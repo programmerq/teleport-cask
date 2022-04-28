@@ -1,6 +1,6 @@
 cask "teleport-ent" do
-  version "9.1.1"
-  sha256 "5709ff11228cb197cd0b5ab9e9690d84484d9a06c8e2626df62072847a830dcc"
+  version "9.1.2"
+  sha256 "a8ead08ae9b1335aa30d2ccc69b74e45750afc169f30a270a0490499e142d605"
 
   url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
       verified: "get.gravitational.com"
