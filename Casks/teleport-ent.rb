@@ -1,7 +1,13 @@
 cask "teleport-ent" do
   version "9.3.3"
+  module Utils
+    def self.getsha
+      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
+    end
+  end
+
   #sha256 "6c6b21b6e9bc902bb46afe6cd48df44060d09ac4e1603bc7316b103f52315304"
-  sha256 Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
+  sha256 "#{Utils.getsha}"
 
   url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
       verified: "get.gravitational.com"
