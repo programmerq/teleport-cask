@@ -1,6 +1,6 @@
 cask "tsh" do
-  version "9.0.0"
-  sha256 "81aa532be9af5ace379af3b464c426ae6f61d9dca24545a245a5474ad6d45679"
+  version "9.3.3"
+  sha256 "056a8025a8b05a976263fbfeca7c6e85f8703b3d78d277155ec06ae31e87419f"
 
   url "https://get.gravitational.com/tsh-#{version}.pkg",
       verified: "get.gravitational.com"

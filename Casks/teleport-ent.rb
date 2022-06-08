@@ -1,6 +1,7 @@
 cask "teleport-ent" do
-  version "9.2.1"
-  sha256 "f73baf999c5f9da1b4ad02da0ba717cc7824b34b3627c3e4c32038c31938ed0e"
+  version "9.3.3"
+  #sha256 "6c6b21b6e9bc902bb46afe6cd48df44060d09ac4e1603bc7316b103f52315304"
+  sha256 Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
 
   url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
       verified: "get.gravitational.com"
