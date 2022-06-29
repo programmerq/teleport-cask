@@ -1,6 +1,6 @@
 cask "teleport@8.0" do
-  version "8.3.13"
-  sha256 "fb2a566c6acae04d1b89a527609780469499ffe274b1a98befab66129d46eb5c"
+  version "8.3.14"
+  sha256 "bf4421ee0362a41ea6cf2e9cc5b75037974989c7ce4400777fa0e679d1f3f8fc"
 
   url "https://get.gravitational.com/teleport-#{version}.pkg",
       verified: "get.gravitational.com"
