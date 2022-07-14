@@ -1,4 +1,4 @@
-cask "teleport-ent" do
+cask "teleport-ent@9.0" do
   module Utils
     def self.version
       return "9.3.9"
