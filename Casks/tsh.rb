@@ -1,6 +1,16 @@
 cask "tsh" do
-  version "9.3.3"
-  sha256 "056a8025a8b05a976263fbfeca7c6e85f8703b3d78d277155ec06ae31e87419f"
+  module Utils
+    def self.version
+      return "11.0.3"
+    end
+    def self.getsha
+      require 'net/http'
+      return Net::HTTP.get(URI("https://get.gravitational.com/tsh-#{version}.pkg.sha256")).split()[0]
+    end
+  end
+
+  version "#{Utils.version}"
+  sha256 "#{Utils.getsha}"
 
   url "https://get.gravitational.com/tsh-#{version}.pkg",
       verified: "get.gravitational.com"
@@ -13,7 +23,7 @@ cask "tsh" do
     "com.gravitational.teleport.tsh"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport-ent", "teleport", "teleport-ent@7.0", "teleport-ent@7.1", "teleport-ent@7.2", "teleport-ent@7.3","teleport-ent@8.0"]
+  conflicts_with formula: "teleport", cask: ["teleport-ent", "teleport", "teleport-ent@7.0", "teleport-ent@7.1", "teleport-ent@7.2", "teleport-ent@7.3", "teleport-ent@8.0", "teleport-ent@9.0", "teleport-ent@10.0"]
 
   caveats do
     license "Apache-2.0"
