@@ -1,7 +1,7 @@
 cask "teleport" do
   module Utils
     def self.version
-      return "11.1.4"
+      return "11.2.1"
     end
     def self.getsha
       require 'net/http'
@@ -15,7 +15,7 @@ cask "teleport" do
   url "https://get.gravitational.com/teleport-#{version}.pkg",
       verified: "get.gravitational.com"
   name "teleport"
-  desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API"
+  desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API."
   homepage "https://goteleport.com/"
   pkg "teleport-#{version}.pkg"
 
@@ -23,7 +23,7 @@ cask "teleport" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport-ent", "tsh", "teleport-ent@7.0", "teleport-ent@7.1", "teleport-ent@7.2", "teleport-ent@7.3", "teleport-ent@8.0 teleport-ent@9.0.rb"]
+  conflicts_with formula: "teleport", cask: ["teleport-ent", "tsh", "teleport-ent@7.3", "teleport-ent@8.0, teleport-ent@9.0, teleport-ent@10.0"]
 
   caveats do
     license "Apache-2.0"
