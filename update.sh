@@ -1,24 +1,26 @@
 #!/bin/bash
-
+set -e
 DIR=$(mktemp -d -t teleport-cask-update)
+REGISTRY=quay.io
+REPOSITORY=gravitational/teleport-ent
 P=$(pwd)
 cd $DIR
-TOKEN=$(curl -s 'https://quay.io/v2/auth?service=quay.io&scope=repository:gravitational/teleport-ent:pull' | jq -r .token)
+TOKEN=$(curl -s "https://quay.io/v2/auth?service=quay.io&scope=repository:gravitational/teleport-ent:pull" | jq -r .token)
 
-echo 'link: </v2/gravitational/teleport-ent/tags/list' > headers.txt
+echo 'link: </v2/gravitational/teleport-ent/tags/list>; rel="next"' > headers.txt
 
 #curl -H "Authorization: Bearer $TOKEN" -s -D headers.txt 'https://quay.io/v2/gravitational/teleport-ent/tags/list' > 1.json
 
 I=0
 while (grep -qs '^link: ' headers.txt); do
-	NEXT=$(grep '^link: ' headers.txt | sed 's/^.*<//g' | sed 's/>.*$//g')
+	NEXT=$(grep '^link: ' headers.txt | sed | sed 's/.*<\([^>]*\)>[; ]*rel[ ="]*next.*$/\1/g')
 	curl -H "Authorization: Bearer ${TOKEN}" -s -D headers.txt "https://quay.io/${NEXT}" > ${I}.json
 	((I=I+1))
 done
 
 versions=($(cat *.json | jq -r '.tags[]' | sort -V | grep '^\d\+\.\d\+\.\d\+$'))
 cd $P
-rm -rd $DIR
+rm -rfd $DIR
 
 latest=${versions[${#versions[@]}-1]}
 latestmajor=$(echo $latest | sed -E 's/([0-9]+).*/\1/')
@@ -145,7 +147,7 @@ cask "teleport-ent@${latestamajor}.0" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport", "tsh", "teleport-ent@7.3", "teleport-ent@8.0, teleport-ent@9.0, teleport-ent"]
+  conflicts_with formula: "teleport", cask: ["teleport", "tsh", "teleport-ent@7.3", "teleport-ent@8.0, teleport-ent@9.0, teleport-ent@${latestbmajor}.0, teleport-ent"]
 
   caveats do
     license "https://dashboard.gravitational.com/web/"
@@ -179,7 +181,7 @@ cask "teleport-ent@${latestbmajor}.0" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport", "tsh", "teleport-ent@7.3", "teleport-ent@8.0, teleport-ent"]
+  conflicts_with formula: "teleport", cask: ["teleport", "tsh", "teleport-ent@7.3", "teleport-ent@8.0, teleport-ent@9.0, teleport-ent@${latestamajor}.0, teleport-ent"]
 
   caveats do
     license "https://dashboard.gravitational.com/web/"
