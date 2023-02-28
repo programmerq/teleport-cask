@@ -1,7 +1,7 @@
 cask "tsh" do
   module Utils
     def self.version
-      return "11.0.3"
+      return "12.0.4"
     end
     def self.getsha
       require 'net/http'
@@ -23,7 +23,7 @@ cask "tsh" do
     "com.gravitational.teleport.tsh"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport-ent", "teleport", "teleport-ent@7.0", "teleport-ent@7.1", "teleport-ent@7.2", "teleport-ent@7.3", "teleport-ent@8.0", "teleport-ent@9.0", "teleport-ent@10.0"]
+  #conflicts_with formula: "teleport", cask: ["teleport-ent", "teleport", "teleport-ent@7.0", "teleport-ent@7.1", "teleport-ent@7.2", "teleport-ent@7.3", "teleport-ent@8.0", "teleport-ent@9.0", "teleport-ent@10.0"]
 
   caveats do
     license "Apache-2.0"
