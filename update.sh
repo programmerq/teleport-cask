@@ -18,7 +18,7 @@ while (grep -qs '^link: ' headers.txt); do
 	((I=I+1))
 done
 
-versions=($(cat *.json | jq -r '.tags[]' | sort -V | grep '^\d\+\.\d\+\.\d\+$'))
+versions=($(cat *.json | jq -r '.tags[]' | sort -V | grep '^\d\+\.\d\+\.\d\+$' | grep -v '^999\.0\.3'))
 cd $P
 rm -rfd $DIR
 
@@ -188,3 +188,5 @@ cask "teleport-ent@${latestbmajor}.0" do
   end
 end
 EOF
+
+git diff | cat
