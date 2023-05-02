@@ -79,7 +79,7 @@ cask "teleport-ent" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport", "tsh", "teleport-ent@8.0, teleport-ent@9.0, teleport-ent@10.0"]
+  conflicts_with formula: "teleport", cask: ["teleport", "teleport-ent@8.0, teleport-ent@9.0"]
 
   caveats do
     license "https://dashboard.gravitational.com/web/"
@@ -113,7 +113,7 @@ cask "teleport" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport-ent", "tsh", "teleport-ent@8.0, teleport-ent@9.0, teleport-ent@10.0"]
+  conflicts_with formula: "teleport", cask: ["teleport-ent", "teleport-ent@8.0, teleport-ent@9.0"]
 
   caveats do
     license "Apache-2.0"
@@ -147,7 +147,7 @@ cask "teleport-ent@${latestamajor}.0" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport", "tsh", "teleport-ent@8.0, teleport-ent@9.0, teleport-ent@${latestbmajor}.0, teleport-ent"]
+  conflicts_with formula: "teleport", cask: ["teleport", "teleport-ent@8.0, teleport-ent@9.0, teleport-ent@${latestbmajor}.0, teleport-ent"]
 
   caveats do
     license "https://dashboard.gravitational.com/web/"
@@ -181,7 +181,7 @@ cask "teleport-ent@${latestbmajor}.0" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport", "tsh", "teleport-ent@8.0, teleport-ent@9.0, teleport-ent@${latestamajor}.0, teleport-ent"]
+  conflicts_with formula: "teleport", cask: ["teleport", "teleport-ent@8.0, teleport-ent@9.0, teleport-ent@${latestamajor}.0, teleport-ent"]
 
   caveats do
     license "https://dashboard.gravitational.com/web/"
