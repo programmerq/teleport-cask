@@ -1,6 +1,16 @@
-cask "teleport-ent@8.0" do
-  version "8.3.19"
-  sha256 "a6fc66e61556515850bca0fa5cace134b7ea31036d74b9e3479969f2489d8468"
+cask "teleport-ent@12.0" do
+  module Utils
+    def self.version
+      return "12.4.6"
+    end
+    def self.getsha
+      require 'net/http'
+      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
+    end
+  end
+
+  version "#{Utils.version}"
+  sha256 "#{Utils.getsha}"
 
   url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
       verified: "get.gravitational.com"
@@ -13,7 +23,7 @@ cask "teleport-ent@8.0" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport", "tsh", "teleport-ent@7.0", "teleport-ent@7.1", "teleport-ent@7.2", "teleport-ent@7.3"]
+  conflicts_with formula: "teleport", cask: ["teleport", teleport-ent@11.0, teleport-ent"]
 
   caveats do
     license "https://dashboard.gravitational.com/web/"
