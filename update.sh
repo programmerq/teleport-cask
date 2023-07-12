@@ -9,17 +9,26 @@ cd $DIR
 TOKEN=$(curl -s "https://public.ecr.aws/token/?service=public.ecr.aws&scope=aws" | jq -r .token)
 
 echo 'link: </v2/gravitational/teleport-ent/tags/list>; rel="next"' > headers.txt
+echo 'link: </v2/gravitational/teleport/tags/list>; rel="next"' > ossheaders.txt
 
 #curl -H "Authorization: Bearer $TOKEN" -s -D headers.txt 'https://quay.io/v2/gravitational/teleport-ent/tags/list' > 1.json
 
 I=0
 while (grep -qs '^link: ' headers.txt); do
 	NEXT=$(grep '^link: ' headers.txt | sed | sed 's/.*<\([^>]*\)>[; ]*rel[ ="]*next.*$/\1/g')
-	curl -H "Authorization: Bearer ${TOKEN}" -s -D headers.txt "https://${REGISTRY}${NEXT}" > ${I}.json
+	curl -H "Authorization: Bearer ${TOKEN}" -s -D headers.txt "https://${REGISTRY}${NEXT}" > ent${I}.json
 	((I=I+1))
 done
 
-versions=($(cat *.json | jq -r '.tags[]' | sort -V | grep '^\d\+\.\d\+\.\d\+$' | grep -v '^999\.0\.3'))
+I=0
+while (grep -qs '^link: ' ossheaders.txt); do
+	NEXT=$(grep '^link: ' ossheaders.txt | sed | sed 's/.*<\([^>]*\)>[; ]*rel[ ="]*next.*$/\1/g')
+	curl -H "Authorization: Bearer ${TOKEN}" -s -D ossheaders.txt "https://${REGISTRY}${NEXT}" > oss${I}.json
+	((I=I+1))
+done
+
+versions=($(cat ent*.json | jq -r '.tags[]' | sort -V | grep '^\d\+\.\d\+\.\d\+$' | grep -v '^999\.0\.3'))
+ossversions=($(cat oss*.json | jq -r '.tags[]' | sort -V | grep '^\d\+\.\d\+\.\d\+$' | grep -v '^999\.0\.3'))
 cd $P
 rm -rfd $DIR
 
@@ -186,6 +195,39 @@ cask "teleport-ent@${latestbmajor}.0" do
 
   caveats do
     license "https://dashboard.gravitational.com/web/"
+  end
+end
+EOF
+
+osslatest=${ossversions[${#ossversions[@]}-1]}
+cat > ./Casks/tsh.rb <<EOF
+cask "tsh" do
+  module Utils
+    def self.version
+      return "${osslatest}"
+    end
+    def self.getsha
+      require 'net/http'
+      return Net::HTTP.get(URI("https://get.gravitational.com/tsh-#{version}.pkg.sha256")).split()[0]
+    end
+  end
+
+  version "#{Utils.version}"
+  sha256 "#{Utils.getsha}"
+
+  url "https://get.gravitational.com/tsh-#{version}.pkg",
+      verified: "get.gravitational.com"
+  name "tsh"
+  desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. TSH client only"
+  homepage "https://goteleport.com/"
+  pkg "tsh-#{version}.pkg"
+
+  uninstall pkgutil: [
+    "com.gravitational.teleport.tsh"
+  ]
+
+  caveats do
+    license "Apache-2.0"
   end
 end
 EOF
