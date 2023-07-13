@@ -35,8 +35,10 @@ rm -rfd $DIR
 latest=${versions[${#versions[@]}-1]}
 latestmajor=$(echo $latest | sed -E 's/([0-9]+).*/\1/')
 #echo ${versions[@]}
-echo $latestmajor
+#echo $latestmajor
 #echo $latest | sed -e 's/^\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)$/major: \1\nminor: \2\npatch: \3/g'
+
+osslatest=${ossversions[${#ossversions[@]}-1]}
 
 let "latestamajor = $latestmajor - 1"
 aversions=()
@@ -101,7 +103,7 @@ cat > ./Casks/teleport.rb <<EOF
 cask "teleport" do
   module Utils
     def self.version
-      return "${latest}"
+      return "${osslatest}"
     end
     def self.getsha
       require 'net/http'
@@ -199,7 +201,6 @@ cask "teleport-ent@${latestbmajor}.0" do
 end
 EOF
 
-osslatest=${ossversions[${#ossversions[@]}-1]}
 cat > ./Casks/tsh.rb <<EOF
 cask "tsh" do
   module Utils
