@@ -59,7 +59,10 @@ latestb=${bversions[${#bversions[@]}-1]}
 #echo $latestamajor
 #echo $latestbmajor
 
-echo $latest
+#echo Enterprise Versions:,OSS Versions: | column -s, -t
+printf "%-23s %-15s\n" 'Enterprise Versions:' 'OSS Versions:'
+#echo $latest,$osslatest | column -s, -t
+printf "%-23s %-15s\n" "$latest" "$osslatest"
 echo $latesta
 echo $latestb
 echo
