@@ -1,7 +1,7 @@
 cask "tsh" do
   module Utils
     def self.version
-      return "13.3.5"
+      return "13.3.6"
     end
     def self.getsha
       require 'net/http'
