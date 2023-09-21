@@ -1,7 +1,7 @@
-cask "teleport-ent@11.0" do
+cask "teleport-ent@13.0" do
   module Utils
     def self.version
-      return "11.3.25"
+      return "13.4.0"
     end
     def self.getsha
       require 'net/http'
@@ -23,7 +23,7 @@ cask "teleport-ent@11.0" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport", teleport-ent@13.0, teleport-ent"]
+  conflicts_with formula: "teleport", cask: ["teleport", teleport-ent@12.0, teleport-ent"]
 
   caveats do
     license "https://dashboard.gravitational.com/web/"
