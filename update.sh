@@ -1,5 +1,8 @@
 #!/bin/bash
 set -e
+
+git pull --no-commit || (echo ; echo "Unable to fast forward pull. Please fix and rerun."; exit 1)
+
 DIR=$(mktemp -d -t teleport-cask-update)
 REGISTRY=public.ecr.aws
 REPOSITORY=gravitational/teleport-ent
@@ -74,8 +77,10 @@ printf "%-23s %-15s\n" "$latest" "$osslatest"
 echo $latesta
 echo $latestb
 echo $latestc
-echo
-echo inspect changes with 'git diff'
+#echo
+#echo inspect changes with 'git diff'
+#echo
+
 
 cat > ./Casks/teleport-ent.rb <<EOF
 cask "teleport-ent" do
@@ -111,6 +116,8 @@ cask "teleport-ent" do
 end
 EOF
 
+git diff --quiet ./Casks/teleport-ent.rb || (git add ./Casks/teleport-ent.rb && git commit -m "$latest")
+
 cat > ./Casks/teleport-connect.rb <<EOF
 cask "teleport-connect" do
   module Utils
@@ -140,6 +147,7 @@ cask "teleport-connect" do
   end
 end
 EOF
+
 
 cat > ./Casks/teleport.rb <<EOF
 cask "teleport" do
@@ -171,108 +179,6 @@ cask "teleport" do
 
   caveats do
     license "Apache-2.0"
-  end
-end
-EOF
-
-cat > ./Casks/teleport-ent@${latestamajor}.0.rb <<EOF
-cask "teleport-ent@${latestamajor}.0" do
-  module Utils
-    def self.version
-      return "${latesta}"
-    end
-    def self.getsha
-      require 'net/http'
-      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
-    end
-  end
-
-  version "#{Utils.version}"
-  sha256 "#{Utils.getsha}"
-
-  url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
-      verified: "get.gravitational.com"
-  name "teleport-ent"
-  desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. Enterprise Edition"
-  homepage "https://goteleport.com/"
-  pkg "teleport-ent-#{version}.pkg"
-
-  uninstall pkgutil: [
-    "com.gravitational.teleport"
-  ]
-
-  conflicts_with formula: "teleport", cask: ["teleport", "teleport-ent@${latestbmajor}.0", "teleport-ent@${latestcmajor}.0", "teleport-ent"]
-
-  caveats do
-    license "https://dashboard.gravitational.com/web/"
-  end
-end
-EOF
-
-cat > ./Casks/teleport-ent@${latestbmajor}.0.rb <<EOF
-cask "teleport-ent@${latestbmajor}.0" do
-  module Utils
-    def self.version
-      return "${latestb}"
-    end
-    def self.getsha
-      require 'net/http'
-      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
-    end
-  end
-
-  version "#{Utils.version}"
-  sha256 "#{Utils.getsha}"
-
-  url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
-      verified: "get.gravitational.com"
-  name "teleport-ent"
-  desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. Enterprise Edition"
-  homepage "https://goteleport.com/"
-  pkg "teleport-ent-#{version}.pkg"
-
-  uninstall pkgutil: [
-    "com.gravitational.teleport"
-  ]
-
-  conflicts_with formula: "teleport", cask: ["teleport", "teleport-ent@${latestamajor}.0", "teleport-ent@${latestcmajor}.0", "teleport-ent"]
-
-  caveats do
-    license "https://dashboard.gravitational.com/web/"
-  end
-end
-EOF
-
-cat > ./Casks/teleport-ent@${latestcmajor}.0.rb <<EOF
-cask "teleport-ent@${latestcmajor}.0" do
-  module Utils
-    def self.version
-      return "${latestc}"
-    end
-    def self.getsha
-      require 'net/http'
-      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
-    end
-  end
-
-  version "#{Utils.version}"
-  sha256 "#{Utils.getsha}"
-
-  url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
-      verified: "get.gravitational.com"
-  name "teleport-ent"
-  desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. Enterprise Edition"
-  homepage "https://goteleport.com/"
-  pkg "teleport-ent-#{version}.pkg"
-
-  uninstall pkgutil: [
-    "com.gravitational.teleport"
-  ]
-
-  conflicts_with formula: "teleport", cask: ["teleport", "teleport-ent@${latestamajor}.0", "teleport-ent@${latestbmajor}.0", "teleport-ent"]
-
-  caveats do
-    license "https://dashboard.gravitational.com/web/"
   end
 end
 EOF
@@ -309,4 +215,119 @@ cask "tsh" do
 end
 EOF
 
-git diff | cat
+git diff --quiet ./Casks/tsh.rb || git add ./Casks/tsh.rb
+git diff --quiet ./Casks/teleport.rb || git add ./Casks/teleport.rb 
+git diff --quiet ./Casks/teleport-connect.rb || git add ./Casks/teleport-connect.rb 
+git diff --quiet --cached ./Casks/tsh.rb ./Casks/teleport.rb ./Casks/teleport-connect.rb || git commit -m "$osslatest"
+
+cat > ./Casks/teleport-ent@${latestamajor}.0.rb <<EOF
+cask "teleport-ent@${latestamajor}.0" do
+  module Utils
+    def self.version
+      return "${latesta}"
+    end
+    def self.getsha
+      require 'net/http'
+      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
+    end
+  end
+
+  version "#{Utils.version}"
+  sha256 "#{Utils.getsha}"
+
+  url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
+      verified: "get.gravitational.com"
+  name "teleport-ent"
+  desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. Enterprise Edition"
+  homepage "https://goteleport.com/"
+  pkg "teleport-ent-#{version}.pkg"
+
+  uninstall pkgutil: [
+    "com.gravitational.teleport"
+  ]
+
+  conflicts_with formula: "teleport", cask: ["teleport", "teleport-ent@${latestbmajor}.0", "teleport-ent@${latestcmajor}.0", "teleport-ent"]
+
+  caveats do
+    license "https://dashboard.gravitational.com/web/"
+  end
+end
+EOF
+
+git diff --quiet ./Casks/teleport-ent@${latestamajor}.0.rb || (git add ./Casks/teleport-ent@${latestamajor}.0.rb && git commit -m "$latesta")
+
+cat > ./Casks/teleport-ent@${latestbmajor}.0.rb <<EOF
+cask "teleport-ent@${latestbmajor}.0" do
+  module Utils
+    def self.version
+      return "${latestb}"
+    end
+    def self.getsha
+      require 'net/http'
+      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
+    end
+  end
+
+  version "#{Utils.version}"
+  sha256 "#{Utils.getsha}"
+
+  url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
+      verified: "get.gravitational.com"
+  name "teleport-ent"
+  desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. Enterprise Edition"
+  homepage "https://goteleport.com/"
+  pkg "teleport-ent-#{version}.pkg"
+
+  uninstall pkgutil: [
+    "com.gravitational.teleport"
+  ]
+
+  conflicts_with formula: "teleport", cask: ["teleport", "teleport-ent@${latestamajor}.0", "teleport-ent@${latestcmajor}.0", "teleport-ent"]
+
+  caveats do
+    license "https://dashboard.gravitational.com/web/"
+  end
+end
+EOF
+
+git diff --quiet ./Casks/teleport-ent@${latestbmajor}.0.rb || (git add ./Casks/teleport-ent@${latestbmajor}.0.rb && git commit -m "$latestb")
+
+cat > ./Casks/teleport-ent@${latestcmajor}.0.rb <<EOF
+cask "teleport-ent@${latestcmajor}.0" do
+  module Utils
+    def self.version
+      return "${latestc}"
+    end
+    def self.getsha
+      require 'net/http'
+      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
+    end
+  end
+
+  version "#{Utils.version}"
+  sha256 "#{Utils.getsha}"
+
+  url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
+      verified: "get.gravitational.com"
+  name "teleport-ent"
+  desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. Enterprise Edition"
+  homepage "https://goteleport.com/"
+  pkg "teleport-ent-#{version}.pkg"
+
+  uninstall pkgutil: [
+    "com.gravitational.teleport"
+  ]
+
+  conflicts_with formula: "teleport", cask: ["teleport", "teleport-ent@${latestamajor}.0", "teleport-ent@${latestbmajor}.0", "teleport-ent"]
+
+  caveats do
+    license "https://dashboard.gravitational.com/web/"
+  end
+end
+EOF
+
+git diff --quiet ./Casks/teleport-ent@${latestcmajor}.0.rb || (git add ./Casks/teleport-ent@${latestcmajor}.0.rb && git commit -m "$latestc")
+
+git status --untracked no
+echo
+git push
