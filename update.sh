@@ -3,7 +3,7 @@ set -e
 
 git pull --no-commit || (echo ; echo "Unable to fast forward pull. Please fix and rerun."; exit 1)
 
-DIR=$(mktemp -d -t teleport-cask-update)
+DIR=$(mktemp -d)
 REGISTRY=public.ecr.aws
 REPOSITORY=gravitational/teleport-ent-distroless
 OSS_REPOSITORY=gravitational/teleport-distroless
