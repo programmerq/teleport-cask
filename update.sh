@@ -5,14 +5,15 @@ git pull --no-commit || (echo ; echo "Unable to fast forward pull. Please fix an
 
 DIR=$(mktemp -d -t teleport-cask-update)
 REGISTRY=public.ecr.aws
-REPOSITORY=gravitational/teleport-ent
+REPOSITORY=gravitational/teleport-ent-distroless
+OSS_REPOSITORY=gravitational/teleport-distroless
 P=$(pwd)
 cd $DIR
 #TOKEN=$(curl -s "https://quay.io/v2/auth?service=quay.io&scope=repository:gravitational/teleport-ent:pull" | jq -r .token)
 TOKEN=$(curl -s "https://public.ecr.aws/token/?service=public.ecr.aws&scope=aws" | jq -r .token)
 
-echo 'link: </v2/gravitational/teleport-ent/tags/list>; rel="next"' > headers.txt
-echo 'link: </v2/gravitational/teleport/tags/list>; rel="next"' > ossheaders.txt
+echo "link: </v2/${REPOSITORY}/tags/list>; rel=\"next\"" > headers.txt
+echo "link: </v2/${OSS_REPOSITORY}/tags/list>; rel=\"next\"" > ossheaders.txt
 
 #curl -H "Authorization: Bearer $TOKEN" -s -D headers.txt 'https://quay.io/v2/gravitational/teleport-ent/tags/list' > 1.json
 
@@ -116,7 +117,7 @@ cask "teleport-ent" do
 end
 EOF
 
-git diff --quiet ./Casks/teleport-ent.rb || (git add ./Casks/teleport-ent.rb && git commit -m "$latest")
+git ls-files --error-unmatch Casks/teleport-ent.rb && git diff --quiet ./Casks/teleport-ent.rb || (git add ./Casks/teleport-ent.rb && git commit -m "$latest")
 
 cat > ./Casks/teleport-connect.rb <<EOF
 cask "teleport-connect" do
@@ -215,9 +216,9 @@ cask "tsh" do
 end
 EOF
 
-git diff --quiet ./Casks/tsh.rb || git add ./Casks/tsh.rb
-git diff --quiet ./Casks/teleport.rb || git add ./Casks/teleport.rb 
-git diff --quiet ./Casks/teleport-connect.rb || git add ./Casks/teleport-connect.rb 
+git ls-files --error-unmatch Casks/tsh.rb && git diff --quiet ./Casks/tsh.rb || git add ./Casks/tsh.rb
+git ls-files --error-unmatch Casks/teleport.rb && git diff --quiet ./Casks/teleport.rb || git add ./Casks/teleport.rb 
+git ls-files --error-unmatch Casks/teleport-connect.rb && git diff --quiet ./Casks/teleport-connect.rb || git add ./Casks/teleport-connect.rb 
 git diff --quiet --cached ./Casks/tsh.rb ./Casks/teleport.rb ./Casks/teleport-connect.rb || git commit -m "$osslatest"
 
 cat > ./Casks/teleport-ent@${latestamajor}.0.rb <<EOF
@@ -254,7 +255,7 @@ cask "teleport-ent@${latestamajor}.0" do
 end
 EOF
 
-git diff --quiet ./Casks/teleport-ent@${latestamajor}.0.rb || (git add ./Casks/teleport-ent@${latestamajor}.0.rb && git commit -m "$latesta")
+git ls-files --error-unmatch Casks/teleport-ent@${latestamajor}.0.rb && git diff --quiet ./Casks/teleport-ent@${latestamajor}.0.rb || (git add ./Casks/teleport-ent@${latestamajor}.0.rb && git commit -m "$latesta")
 
 cat > ./Casks/teleport-ent@${latestbmajor}.0.rb <<EOF
 cask "teleport-ent@${latestbmajor}.0" do
@@ -290,7 +291,7 @@ cask "teleport-ent@${latestbmajor}.0" do
 end
 EOF
 
-git diff --quiet ./Casks/teleport-ent@${latestbmajor}.0.rb || (git add ./Casks/teleport-ent@${latestbmajor}.0.rb && git commit -m "$latestb")
+git ls-files --error-unmatch Casks/teleport-ent@${latestbmajor}.0.rb && git diff --quiet ./Casks/teleport-ent@${latestbmajor}.0.rb || (git add ./Casks/teleport-ent@${latestbmajor}.0.rb && git commit -m "$latestb")
 
 cat > ./Casks/teleport-ent@${latestcmajor}.0.rb <<EOF
 cask "teleport-ent@${latestcmajor}.0" do
@@ -326,7 +327,7 @@ cask "teleport-ent@${latestcmajor}.0" do
 end
 EOF
 
-git diff --quiet ./Casks/teleport-ent@${latestcmajor}.0.rb || (git add ./Casks/teleport-ent@${latestcmajor}.0.rb && git commit -m "$latestc")
+git ls-files --error-unmatch Casks/teleport-ent@${latestcmajor}.0.rb && git diff --quiet ./Casks/teleport-ent@${latestcmajor}.0.rb || (git add ./Casks/teleport-ent@${latestcmajor}.0.rb && git commit -m "$latestc")
 
 git status --untracked no
 echo
