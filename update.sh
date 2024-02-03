@@ -145,7 +145,7 @@ cask "teleport-connect" do
   uninstall quit: "gravitational.teleport.connect"
 
   caveats do
-    license "Apache-2.0"
+    license "AGPL-3.0"
   end
 end
 EOF
@@ -180,7 +180,7 @@ cask "teleport" do
   conflicts_with formula: "teleport", cask: ["teleport-ent", "teleport-ent@${latestamajor}.0", "teleport-ent@${latestbmajor}.0", "teleport-ent@${latestcmajor}.0"]
 
   caveats do
-    license "Apache-2.0"
+    license "AGPL-3.0"
   end
 end
 EOF
@@ -212,7 +212,7 @@ cask "tsh" do
   ]
 
   caveats do
-    license "Apache-2.0"
+    license "AGPL-3.0"
   end
 end
 EOF
