@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 git pull --no-commit || (echo ; echo "Unable to fast forward pull. Please fix and rerun."; exit 1)
 
@@ -19,14 +19,14 @@ echo "link: </v2/${OSS_REPOSITORY}/tags/list>; rel=\"next\"" > ossheaders.txt
 
 I=0
 while (grep -qs '^link: ' headers.txt); do
-	NEXT=$(grep '^link: ' headers.txt | sed | sed 's/.*<\([^>]*\)>[; ]*rel[ ="]*next.*$/\1/g')
+	NEXT=$(grep '^link: ' headers.txt | sed 's/.*<\([^>]*\)>[; ]*rel[ ="]*next.*$/\1/g')
 	curl -H "Authorization: Bearer ${TOKEN}" -s -D headers.txt "https://${REGISTRY}${NEXT}" > ent${I}.json
 	((I=I+1))
 done
 
 I=0
 while (grep -qs '^link: ' ossheaders.txt); do
-	NEXT=$(grep '^link: ' ossheaders.txt | sed | sed 's/.*<\([^>]*\)>[; ]*rel[ ="]*next.*$/\1/g')
+	NEXT=$(grep '^link: ' ossheaders.txt | sed 's/.*<\([^>]*\)>[; ]*rel[ ="]*next.*$/\1/g')
 	curl -H "Authorization: Bearer ${TOKEN}" -s -D ossheaders.txt "https://${REGISTRY}${NEXT}" > oss${I}.json
 	((I=I+1))
 done
