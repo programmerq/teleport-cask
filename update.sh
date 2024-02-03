@@ -31,8 +31,8 @@ while (grep -qs '^link: ' ossheaders.txt); do
 	((I=I+1))
 done
 
-versions=($(cat ent*.json | jq -r '.tags[]' | sort -V | grep '^\d\+\.\d\+\.\d\+$' | grep -v '^999\.0\.3'))
-ossversions=($(cat oss*.json | jq -r '.tags[]' | sort -V | grep '^\d\+\.\d\+\.\d\+$' | grep -v '^999\.0\.3'))
+versions=($(cat ent*.json | jq -r '.tags[]' | sort -V | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | grep -v '^999\.0\.3'))
+ossversions=($(cat oss*.json | jq -r '.tags[]' | sort -V | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | grep -v '^999\.0\.3'))
 cd $P
 rm -rfd $DIR
 
