@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 git pull --no-commit || (echo ; echo "Unable to fast forward pull. Please fix and rerun."; exit 1)
 
@@ -22,6 +22,7 @@ while (grep -qs '^link: ' headers.txt); do
 	NEXT=$(grep '^link: ' headers.txt | sed 's/.*<\([^>]*\)>[; ]*rel[ ="]*next.*$/\1/g')
 	curl -H "Authorization: Bearer ${TOKEN}" -s -D headers.txt "https://${REGISTRY}${NEXT}" > ent${I}.json
 	((I=I+1))
+	sleep 1 # try to avoid rate limit
 done
 
 I=0
