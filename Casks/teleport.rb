@@ -1,7 +1,7 @@
 cask "teleport" do
   module Utils
     def self.version
-      return "15.4.3"
+      return "16.0.0"
     end
     def self.getsha
       require 'net/http'
@@ -23,7 +23,7 @@ cask "teleport" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport-ent", "teleport-ent@14.0", "teleport-ent@13.0", "teleport-ent@12.0"]
+  conflicts_with formula: "teleport", cask: ["teleport-ent", "teleport-ent@15.0", "teleport-ent@14.0", "teleport-ent@13.0"]
 
   caveats do
     license "AGPL-3.0"
