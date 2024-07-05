@@ -5,15 +5,15 @@ cask "tsh" do
     end
     def self.getsha
       require 'net/http'
-      return Net::HTTP.get(URI("https://get.gravitational.com/tsh-#{version}.pkg.sha256")).split()[0]
+      return Net::HTTP.get(URI("https://cdn.teleport.dev/tsh-#{version}.pkg.sha256")).split()[0]
     end
   end
 
   version "#{Utils.version}"
   sha256 "#{Utils.getsha}"
 
-  url "https://get.gravitational.com/tsh-#{version}.pkg",
-      verified: "get.gravitational.com"
+  url "https://cdn.teleport.dev/tsh-#{version}.pkg",
+      verified: "cdn.teleport.dev"
   name "tsh"
   desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. TSH client only"
   homepage "https://goteleport.com/"

@@ -92,15 +92,15 @@ cask "teleport-ent" do
     end
     def self.getsha
       require 'net/http'
-      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
+      return Net::HTTP.get(URI("https://cdn.teleport.dev/teleport-ent-#{version}.pkg.sha256")).split()[0]
     end
   end
 
   version "#{Utils.version}"
   sha256 "#{Utils.getsha}"
 
-  url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
-      verified: "get.gravitational.com"
+  url "https://cdn.teleport.dev/teleport-ent-#{version}.pkg",
+      verified: "cdn.teleport.dev"
   name "teleport-ent"
   desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. Enterprise Edition"
   homepage "https://goteleport.com/"
@@ -128,15 +128,15 @@ cask "teleport-connect" do
     end
     def self.getsha
       require 'net/http'
-      return Net::HTTP.get(URI("https://get.gravitational.com/Teleport Connect-#{version}.dmg.sha256")).split()[0]
+      return Net::HTTP.get(URI("https://cdn.teleport.dev/Teleport Connect-#{version}.dmg.sha256")).split()[0]
     end
   end
 
   version "#{Utils.version}"
   sha256 "#{Utils.getsha}"
 
-  url "https://get.gravitational.com/Teleport Connect-#{version}.dmg",
-      verified: "get.gravitational.com"
+  url "https://cdn.teleport.dev/Teleport Connect-#{version}.dmg",
+      verified: "cdn.teleport.dev"
   name "Teleport Connect"
   desc "Teleport Connect is a user-friendly GUI desktop application that provides the same access to servers, databases, and Kubernetes clusters as the Teleport command-line client (tsh)."
   homepage "https://goteleport.com/"
@@ -159,15 +159,15 @@ cask "teleport" do
     end
     def self.getsha
       require 'net/http'
-      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-#{version}.pkg.sha256")).split()[0]
+      return Net::HTTP.get(URI("https://cdn.teleport.dev/teleport-#{version}.pkg.sha256")).split()[0]
     end
   end
 
   version "#{Utils.version}"
   sha256 "#{Utils.getsha}"
 
-  url "https://get.gravitational.com/teleport-#{version}.pkg",
-      verified: "get.gravitational.com"
+  url "https://cdn.teleport.dev/teleport-#{version}.pkg",
+      verified: "cdn.teleport.dev"
   name "teleport"
   desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API."
   homepage "https://goteleport.com/"
@@ -193,15 +193,15 @@ cask "tsh" do
     end
     def self.getsha
       require 'net/http'
-      return Net::HTTP.get(URI("https://get.gravitational.com/tsh-#{version}.pkg.sha256")).split()[0]
+      return Net::HTTP.get(URI("https://cdn.teleport.dev/tsh-#{version}.pkg.sha256")).split()[0]
     end
   end
 
   version "#{Utils.version}"
   sha256 "#{Utils.getsha}"
 
-  url "https://get.gravitational.com/tsh-#{version}.pkg",
-      verified: "get.gravitational.com"
+  url "https://cdn.teleport.dev/tsh-#{version}.pkg",
+      verified: "cdn.teleport.dev"
   name "tsh"
   desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. TSH client only"
   homepage "https://goteleport.com/"
@@ -230,15 +230,15 @@ cask "teleport-ent@${latestamajor}.0" do
     end
     def self.getsha
       require 'net/http'
-      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
+      return Net::HTTP.get(URI("https://cdn.teleport.dev/teleport-ent-#{version}.pkg.sha256")).split()[0]
     end
   end
 
   version "#{Utils.version}"
   sha256 "#{Utils.getsha}"
 
-  url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
-      verified: "get.gravitational.com"
+  url "https://cdn.teleport.dev/teleport-ent-#{version}.pkg",
+      verified: "cdn.teleport.dev"
   name "teleport-ent"
   desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. Enterprise Edition"
   homepage "https://goteleport.com/"
@@ -266,15 +266,15 @@ cask "teleport-ent@${latestbmajor}.0" do
     end
     def self.getsha
       require 'net/http'
-      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
+      return Net::HTTP.get(URI("https://cdn.teleport.dev/teleport-ent-#{version}.pkg.sha256")).split()[0]
     end
   end
 
   version "#{Utils.version}"
   sha256 "#{Utils.getsha}"
 
-  url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
-      verified: "get.gravitational.com"
+  url "https://cdn.teleport.dev/teleport-ent-#{version}.pkg",
+      verified: "cdn.teleport.dev"
   name "teleport-ent"
   desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. Enterprise Edition"
   homepage "https://goteleport.com/"
@@ -302,15 +302,15 @@ cask "teleport-ent@${latestcmajor}.0" do
     end
     def self.getsha
       require 'net/http'
-      return Net::HTTP.get(URI("https://get.gravitational.com/teleport-ent-#{version}.pkg.sha256")).split()[0]
+      return Net::HTTP.get(URI("https://cdn.teleport.dev/teleport-ent-#{version}.pkg.sha256")).split()[0]
     end
   end
 
   version "#{Utils.version}"
   sha256 "#{Utils.getsha}"
 
-  url "https://get.gravitational.com/teleport-ent-#{version}.pkg",
-      verified: "get.gravitational.com"
+  url "https://cdn.teleport.dev/teleport-ent-#{version}.pkg",
+      verified: "cdn.teleport.dev"
   name "teleport-ent"
   desc "Teleport is a gateway for managing access to clusters of Linux servers via SSH or the Kubernetes API. Enterprise Edition"
   homepage "https://goteleport.com/"
