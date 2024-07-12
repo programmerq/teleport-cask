@@ -1,7 +1,7 @@
 cask "teleport-ent@15.0" do
   module Utils
     def self.version
-      return "15.4.7"
+      return "15.4.9"
     end
     def self.getsha
       require 'net/http'
