@@ -8,8 +8,6 @@ cask "teleport-ent@15.0" do
       return Net::HTTP.get(URI("https://cdn.teleport.dev/teleport-ent-#{version}.pkg.sha256")).split()[0]
     end
   end
-  
-  depends_on :macos
 
   version "#{Utils.version}"
   sha256 "#{Utils.getsha}"
