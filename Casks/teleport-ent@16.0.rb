@@ -9,8 +9,6 @@ cask "teleport-ent@16.0" do
     end
   end
 
-  depends_on :macos
-
   version "#{Utils.version}"
   sha256 "#{Utils.getsha}"
 
