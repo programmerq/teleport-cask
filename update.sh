@@ -110,7 +110,7 @@ cask "teleport-ent" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport", "teleport-ent@${latestamajor}.0", "teleport-ent@${latestbmajor}.0"]
+  conflicts_with cask: ["teleport", "teleport-ent@${latestamajor}.0", "teleport-ent@${latestbmajor}.0"]
 
   caveats do
     license "https://dashboard.gravitational.com/web/"

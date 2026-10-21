@@ -23,7 +23,7 @@ cask "teleport" do
     "com.gravitational.teleport"
   ]
 
-  conflicts_with formula: "teleport", cask: ["teleport-ent", "teleport-ent@17.0", "teleport-ent@16.0", "teleport-ent@15.0"]
+  conflicts_with cask: ["teleport-ent", "teleport-ent@17.0", "teleport-ent@16.0", "teleport-ent@15.0"]
 
   caveats do
     license "AGPL-3.0"
